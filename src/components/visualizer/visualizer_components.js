@@ -1,0 +1,40 @@
+import styled from 'styled-components';
+
+export const Wrapper = styled.div`
+    background-color: #171717;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    height: 80vh;
+    margin: auto;
+`
+
+export const Value = styled.span`
+    color: white;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+`
+
+export const Bar = styled.div`
+    background-color: #CB6BF9;
+    width: 1.4rem;
+    height: ${p => `${p.height * 10}px` || 0};
+    border-radius: 50px 50px 0 0;
+`
+
+export const BarWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    margin-right: 0.6rem;
+    position: absolute;
+    bottom: 0px;
+`
+
+export const Container = styled.div`
+    //border: 1px solid white;
+    position: relative;
+    height: 413px;
+	width: ${p => `${p.length * 30}px`};;
+`
