@@ -1,3 +1,6 @@
+// TODO 
+// This implementation is not working correctly and is not final
+
 import { config } from '../app_config';
 
 const { compareColor, sortedColor, previousColor } = config;

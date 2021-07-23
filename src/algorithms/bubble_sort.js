@@ -1,64 +1,65 @@
 import { config } from '../app_config';
+import swap from './swap';
+import { getValue, setColor } from './util';
 
-const { compareColor, sortedColor, previousColor } = config;
+const { compareColor, sortedColor, baseColor } = config.common;
 
-function swap(el1, el2, container) {
-    return new Promise((resolve) => {
+/**
+ * Bubble sort implementation for the visualizer.
+ * 
+ * @param {function} callback function to call after completion
+ * @param {number} delay controls to speed of algorithm
+ */
+export async function BubbleSort(callback, delay = 100) {
+    let container = document.getElementById('container');
 
-        // For exchanging styles of two blocks
-        var temp = el1.style.transform;
-        el1.style.transform = el2.style.transform;
-        el2.style.transform = temp;
-
-        window.requestAnimationFrame(function () {
-
-            // For waiting for .25 sec
-            setTimeout(() => {
-                container.insertBefore(el2, el1);
-                resolve();
-            }, 250);
-        });
-    });
-}
-
-export async function BubbleSort(container, callback, delay = 100) {
+    // blocks is the array container a bar and value as elements.
+    // Each element in blocks contains a bar(div) and a span(value).
+    //
+    //               __ value(span)
+    //  blocks[0] --|
+    //              |__ bar(div)
+    //
     let blocks = container.childNodes;
+    let noSwap;
 
-    // BubbleSort Algorithm
     for (var i = 0; i < blocks.length; i += 1) {
+        noSwap = true;
         for (var j = 0; j < blocks.length - i - 1; j += 1) {
 
-            // To change background-color of the
-            // blocks to be compared
-            blocks[j].childNodes[1].style.backgroundColor = compareColor;
-            blocks[j + 1].childNodes[1].style.backgroundColor = compareColor;
+            setColor(j, compareColor);
+            setColor(j + 1, compareColor);
 
-            // To wait for .1 sec
             await new Promise((resolve) =>
                 setTimeout(() => {
                     resolve();
                 }, delay)
             );
 
-            var value1 = Number(blocks[j].childNodes[0].innerHTML);
-            var value2 = Number(blocks[j + 1]
-                .childNodes[0].innerHTML);
+            var value1 = getValue(j);
+            var value2 = getValue(j + 1);
 
-            // To compare value of two blocks
             if (value1 > value2) {
                 await swap(blocks[j], blocks[j + 1], container);
+                noSwap = false;
                 blocks = container.childNodes;
             }
 
-            // Changing the color to the previous one
-            blocks[j].childNodes[1].style.backgroundColor = previousColor;
-            blocks[j + 1].childNodes[1].style.backgroundColor = previousColor;
+            setColor(j, baseColor);
+            setColor(j + 1, baseColor);
         }
 
-        //changing the color of greatest element
-        //found in the above traversal
-        blocks[blocks.length - i - 1].childNodes[1]
-            .style.backgroundColor = sortedColor;
+        if (noSwap) {
+            // For already sorted array
+            for (let i = 0; i < blocks.length; i++) {
+                setColor(i, sortedColor);
+            }
+            break;
+        }
+        else {
+            // Last element is now sorted
+            setColor(blocks.length - i - 1, sortedColor);
+        }
     }
 
     if (callback) callback();

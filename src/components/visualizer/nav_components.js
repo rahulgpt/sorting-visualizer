@@ -44,7 +44,6 @@ export const ResetIcon = styled(FiRefreshCw)`
 `
 
 
-
 export const VSlider = withStyles({
     root: {
         width: '200px',
