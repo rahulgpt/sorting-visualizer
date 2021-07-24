@@ -62,7 +62,7 @@ async function pivot(blocks, start = 0, end = blocks.length + 1) {
 }
 
 /**
- * Quick Sort iterative implementation for the visualizer
+ * Quick Sort(iterative) implementation for the visualizer
  * 
  * @param {function} callback 
  */
