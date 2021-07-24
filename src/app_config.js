@@ -7,7 +7,8 @@ export const config = {
         baseColor: "#CB6BF9",
     },
     quickSort: {
-        pivotColor: '#FF4949'
+        pivotColor: '#ca5079',
+        lessThanColor: '#D291BC',
     },
     selectionSort: {
         lowestColor: '#D291BC',

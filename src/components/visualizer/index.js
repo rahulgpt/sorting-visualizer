@@ -38,14 +38,22 @@ class Visualizer extends Component {
             //     () => this.setState({ isDisabled: false })
             // );
         }, 10)
+
+        document.addEventListener('keydown', e => {
+            if (e.key === 'b') this.handleBubbleSort();
+            if (e.key === 's') this.handleSelectionSort();
+            if (e.key === 'i') this.handleInsertionSort();
+            if (e.key === 'q') this.handleQuickSort();
+
+            if (e.key === 'r') window.location.reload();
+        })
     }
 
     componentDidUpdate() {
-        let blocks = this.parentRef.current.childNodes[0].childNodes;
         this.state.bubbleSort && BubbleSort(() => this.handleBubbleSort());
-        this.state.quickSort && QuickSort(blocks);
         this.state.selectionSort && SelectionSort(() => this.handleSelectionSort());
         this.state.insertionSort && InsertionSort(() => this.handleInsertionSort());
+        this.state.quickSort && QuickSort(() => this.handleQuickSort());
     }
 
     state = {
@@ -69,9 +77,7 @@ class Visualizer extends Component {
         let container = document.getElementById('container');
         let blocks = container.childNodes;
 
-        for (let i = 0; i < blocks.length; i++) {
-            blocks[i].childNodes[1].style.backgroundColor = baseColor;
-        }
+        blocks.forEach(block => block.childNodes[1].style.backgroundColor = baseColor);
     }
 
     handleBubbleSort = () => {
@@ -102,10 +108,10 @@ class Visualizer extends Component {
         })
     }
 
-    // handleOnChange = (e, newValue) => {
-    //     // this.setState({ sliderValue: newValue });
-    //     this.handleResetArray(Math.floor(parseInt(newValue)));
-    // }
+    handleOnChange = (e, newValue) => {
+        // this.setState({ sliderValue: newValue });
+        this.handleResetArray(Math.floor(parseInt(newValue)));
+    }
 
     render() {
         const { isDisabled } = this.state;
@@ -148,6 +154,7 @@ class Visualizer extends Component {
                             min={2} max={50}
                             aria-label="pretto slider"
                             defaultValue={20}
+                            onChange={this.handleOnChange}
                         />
                     </FlexWrapper>
                 </NavWrapper>
