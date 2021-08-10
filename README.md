@@ -11,4 +11,5 @@ npm i
 npm start
 ```
 
-![Sorting Visualizer App](https://user-images.githubusercontent.com/56781067/120695219-c60a5000-c4c8-11eb-8e7e-660ab145d861.png)
+![sort-viz](https://user-images.githubusercontent.com/56781067/128822236-b10e7ae3-78d2-4ddc-81f9-960095a9d7c0.gif)
+
