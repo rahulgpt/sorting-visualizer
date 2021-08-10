@@ -10,7 +10,7 @@ const { compareColor, sortedColor } = config.common;
  * @param {function} callback function to call after completion
  * @param {number} delay controls the speed of algorithm
  */
-export async function InsertionSort(callback, delay = 100) {
+export async function InsertionSort(callback) {
     let container = document.getElementById('container');
 
     // blocks is the array container a bar and value as elements.
@@ -32,7 +32,6 @@ export async function InsertionSort(callback, delay = 100) {
         let idx = i;
 
         for (var j = i - 1; j >= 0 && getValue(j) > currentVal; j--, idx--) {
-            let prevColor = blocks[idx].childNodes[1].style.backgroundColor;
             setColor(idx, compareColor);
 
             await new Promise((resolve) =>

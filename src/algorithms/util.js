@@ -21,3 +21,12 @@ export const setColor = (index, color) => {
     let blocks = container.childNodes;
     blocks[index].childNodes[1].style.backgroundColor = color;
 }
+
+
+export const delay = time => {
+    return new Promise((resolve) =>
+        setTimeout(() => {
+            resolve();
+        }, time)
+    );
+}

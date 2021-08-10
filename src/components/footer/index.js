@@ -50,8 +50,8 @@ const Footer = () => {
                     <ProfilePic src={Pic} />
                     <BlankWrapper margin='100'>
                         <StyledHeading>By Rahul Gupta</StyledHeading>
-                        <SocialTag href='https://www.google.com/' target='_blank'>@rahulgpt_</SocialTag>
-                        <StyledText>Sorting Visualizer Reactjs code is free to use<br /> under MIT</StyledText>
+                        <SocialTag href='https://www.instagram.com/rhgpt_/' target='_blank'>@rhgpt_</SocialTag>
+                        <StyledText>Sorting Visualizer is a personal project <br /> I built with React</StyledText>
                     </BlankWrapper>
                 </FlexWrapper>
             </BlankWrapper>

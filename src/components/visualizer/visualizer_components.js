@@ -17,7 +17,7 @@ export const Value = styled.span`
 
 export const Bar = styled.div`
     background-color: #CB6BF9;
-    width: 1.4rem;
+    width: 1.4em; // 1.4
     height: ${p => `${p.height * 10}px` || 0};
     border-radius: 50px 50px 0 0;
 `
@@ -27,7 +27,7 @@ export const BarWrapper = styled.div`
     flex-direction: column;
     justify-content: flex-end;
     align-items: center;
-    margin-right: 0.6rem;
+    //margin-right: 0.6rem; // 0.6
     position: absolute;
     bottom: 0px;
 `

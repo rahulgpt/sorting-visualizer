@@ -1,5 +1,3 @@
-import { config } from '../app_config';
-
 /**
  * Swap the elements by using replaceWith
  * 
@@ -21,7 +19,7 @@ export default function swap(el1, el2) {
                 el2.replaceWith(el1);
                 tempNode.replaceWith(el2);
                 resolve();
-            }, config.swapDelay);
+            }, 250); //250
         })
     })
 }

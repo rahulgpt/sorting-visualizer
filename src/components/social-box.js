@@ -24,13 +24,13 @@ const SocialBox = ({ color, alignment }) => {
     return (
         <IconContext.Provider value={{ color: color }}>
             <SocialWrapper alignment={alignment} >
-                <SocialLink href="#" target="_blank">
+                <SocialLink href="https://github.com/rahulgpt" target="_blank">
                     <FaGithub />
                 </SocialLink>
-                <SocialLink href="#" target="_blank">
+                <SocialLink href="https://www.instagram.com/rhgpt_/" target="_blank">
                     <FaInstagram />
                 </SocialLink>
-                <SocialLink href="#" target="_blank">
+                <SocialLink href="https://twitter.com/RHGPT" target="_blank">
                     <FaTwitter />
                 </SocialLink>
             </SocialWrapper>

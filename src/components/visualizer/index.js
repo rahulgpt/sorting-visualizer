@@ -1,13 +1,10 @@
 import React, { Component, createRef } from 'react';
-import animation from '../animations';
-import { BubbleSort, QuickSort, SelectionSort, InsertionSort } from '../../algorithms';
+import { BubbleSort, QuickSort, SelectionSort, InsertionSort, HeapSort } from '../../algorithms';
 import FlexWrapper from '../flex-wrapper.js';
 import { Wrapper, Value, Bar, BarWrapper, Container } from './visualizer_components';
-import {
-    NavWrapper, Logo, NavElement, ResetIcon,
-    VSlider,
-} from './nav_components';
+import { NavWrapper, Logo, NavElement, ResetIcon } from './nav_components';
 import { config } from '../../app_config';
+
 
 class Visualizer extends Component {
     constructor(props) {
@@ -31,19 +28,16 @@ class Visualizer extends Component {
             childNodes.forEach(node => {
                 node.style.visibility = "visible";
             })
-
-
-            // animation.stagger(
-            //     childNodes,
-            //     () => this.setState({ isDisabled: false })
-            // );
-        }, 10)
+        }, 10);
 
         document.addEventListener('keydown', e => {
-            if (e.key === 'b') this.handleBubbleSort();
-            if (e.key === 's') this.handleSelectionSort();
-            if (e.key === 'i') this.handleInsertionSort();
-            if (e.key === 'q') this.handleQuickSort();
+            const { isRunning } = this;
+            if (e.key === 'b' && !isRunning()) this.handleBubbleSort();
+            if (e.key === 's' && !isRunning()) this.handleSelectionSort();
+            if (e.key === 'i' && !isRunning()) this.handleInsertionSort();
+            if (e.key === 'q' && !isRunning()) this.handleQuickSort();
+            if (e.key === 'h' && !isRunning()) this.handleHeapSort();
+            if (e.key === 'n' && !isRunning()) this.handleResetArray();
 
             if (e.key === 'r') window.location.reload();
         })
@@ -54,6 +48,7 @@ class Visualizer extends Component {
         this.state.selectionSort && SelectionSort(() => this.handleSelectionSort());
         this.state.insertionSort && InsertionSort(() => this.handleInsertionSort());
         this.state.quickSort && QuickSort(() => this.handleQuickSort());
+        this.state.heapSort && HeapSort(() => this.handleHeapSort());
     }
 
     state = {
@@ -62,6 +57,7 @@ class Visualizer extends Component {
         quickSort: false,
         selectionSort: false,
         insertionSort: false,
+        heapSort: false,
         isDisabled: false,
         arrLength: 20
     }
@@ -108,9 +104,16 @@ class Visualizer extends Component {
         })
     }
 
-    handleOnChange = (e, newValue) => {
-        // this.setState({ sliderValue: newValue });
-        this.handleResetArray(Math.floor(parseInt(newValue)));
+    handleHeapSort = () => {
+        this.setState({
+            heapSort: !this.state.heapSort,
+            isDisabled: !this.state.isDisabled,
+        })
+    }
+
+    isRunning = () => {
+        return this.state.bubbleSort || this.state.selectionSort
+            || this.state.quickSort || this.state.insertionSort;
     }
 
     render() {
@@ -119,52 +122,49 @@ class Visualizer extends Component {
         return (
             <React.Fragment>
                 <NavWrapper>
-                    <FlexWrapper justifyContent='space-between'>
+                    <FlexWrapper justifyContent='space-between' >
                         <Logo onClick={() => window.location.reload()}>&lt; Sorting Visualizer /&gt;</Logo>
 
                         {isDisabled ? <ResetIcon size={30} disabled={isDisabled} color={'#FFE5E5'} />
                             : <ResetIcon size={30} color={'white'} disabled={isDisabled} onClick={this.handleResetArray} />}
                     </FlexWrapper>
-                    <FlexWrapper justifyContent='flex-start' margin='2.5rem 0 0 0'>
-                        <NavElement
-                            disabled={this.state.isDisabled}
-                            onClick={this.handleBubbleSort}>
-                            Bubble Sort
-                        </NavElement>
-                        <NavElement
-                            disabled={isDisabled}
-                            onClick={this.handleSelectionSort}>
-                            Selection Sort
-                        </NavElement>
-                        <NavElement
-                            disabled={isDisabled}
-                            onClick={this.handleInsertionSort}>
-                            Insertion Sort
-                        </NavElement>
-                        <NavElement
-                            disabled={isDisabled}
-                            onClick={this.handleQuickSort}>
-                            Quick Sort
-                        </NavElement>
-                        <NavElement disabled={isDisabled}>Merge Sort</NavElement>
-                        <NavElement disabled={isDisabled}>Radix Sort</NavElement>
-                        <VSlider
-                            key={`Slider-${this.state.sliderValue}`}
-                            valueLabelDisplay="auto"
-                            min={2} max={50}
-                            aria-label="pretto slider"
-                            defaultValue={20}
-                            onChange={this.handleOnChange}
-                        />
+                    <FlexWrapper justifyContent='space-between' margin='2.5rem 0 0 0'>
+                        <FlexWrapper justifyContent='flex-start'>
+                            <NavElement
+                                disabled={this.state.isDisabled}
+                                onClick={this.handleBubbleSort}>
+                                Bubble Sort
+                            </NavElement>
+                            <NavElement
+                                disabled={isDisabled}
+                                onClick={this.handleSelectionSort}>
+                                Selection Sort
+                            </NavElement>
+                            <NavElement
+                                disabled={isDisabled}
+                                onClick={this.handleInsertionSort}>
+                                Insertion Sort
+                            </NavElement>
+                            <NavElement
+                                disabled={isDisabled}
+                                onClick={this.handleQuickSort}>
+                                Quick Sort
+                            </NavElement>
+                            <NavElement
+                                disabled={isDisabled}
+                                onClick={this.handleHeapSort}>
+                                Heap Sort
+                            </NavElement>
+                        </FlexWrapper>
                     </FlexWrapper>
                 </NavWrapper>
 
                 <Wrapper ref={this.parentRef} id="wrapper">
                     <Container length={this.state.arrLength} id="container">
                         {this.state.array.map((value, idx) => (
-                            <BarWrapper key={idx} idx={idx} style={{ visibility: 'visible' }}>
+                            <BarWrapper key={idx} idx={idx} style={{ visibility: 'hidden' }}>
                                 <Value>{value}</Value>
-                                <Bar className="array-bar" height={value} />
+                                <Bar className="array-bar" height={value} width={12} />
                             </BarWrapper>
                         ))}
                     </Container>
