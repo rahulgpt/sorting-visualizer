@@ -113,7 +113,8 @@ class Visualizer extends Component {
 
     isRunning = () => {
         return this.state.bubbleSort || this.state.selectionSort
-            || this.state.quickSort || this.state.insertionSort;
+            || this.state.quickSort || this.state.insertionSort
+            || this.state.heapSort;
     }
 
     render() {
