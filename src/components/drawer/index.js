@@ -63,10 +63,27 @@ const Code = styled(SyntaxHighlighter)`
 `;
 
 const Drawer = ({ toggleOpen, isOpen, algo }) => {
-    const colorDescLookup = [
+    const colorDescLookupCommon = [
         { color: "#cb6bf9", value: "Unsorted" },
         { color: "#952AC7", value: "Comparing" },
         { color: "#77DD77", value: "Sorted" },
+    ];
+
+    const colorDescSpecific = {
+        selection: [{ color: "#D291BC", value: "Lowest Element" }],
+        quick: [
+            { color: "#bbbdda", value: "Pivot" },
+            { color: "#D291BC", value: "Less than Pivot" },
+        ],
+        heap: [{ color: "#D291BC", value: "Largest Element" }],
+    };
+
+    const colorDescSpecificLookup = [
+        ,
+        colorDescSpecific.selection,
+        ,
+        colorDescSpecific.quick,
+        colorDescSpecific.heap,
     ];
 
     const os = { windows: 0, mac: 1 };
@@ -94,7 +111,14 @@ const Drawer = ({ toggleOpen, isOpen, algo }) => {
             <DrawArea isOpen={isOpen}>
                 <h3>Color Description</h3>
                 <Row>
-                    {colorDescLookup.map((el) => (
+                    {colorDescLookupCommon.map((el) => (
+                        <ColorDescription
+                            color={el.color}
+                            description={el.value}
+                            key={Math.random() % 100}
+                        />
+                    ))}
+                    {colorDescSpecificLookup[algo]?.map((el) => (
                         <ColorDescription
                             color={el.color}
                             description={el.value}
