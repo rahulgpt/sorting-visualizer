@@ -4,6 +4,7 @@ import FlexWrapper from "../flex-wrapper.js";
 import { Wrapper, Value, Bar, BarWrapper, Container } from "./visualizer_components";
 import { NavWrapper, Logo, NavElement, ResetIcon, StopIcon } from "./nav_components";
 import { config } from "../../app_config";
+import Drawer from "../drawer";
 
 class Visualizer extends Component {
     constructor(props) {
@@ -31,14 +32,26 @@ class Visualizer extends Component {
 
         document.addEventListener("keydown", (e) => {
             const { isRunning } = this;
-            if (e.key === "b" && !isRunning()) this.handleBubbleSort();
-            if (e.key === "s" && !isRunning()) this.handleSelectionSort();
-            if (e.key === "i" && !isRunning()) this.handleInsertionSort();
-            if (e.key === "q" && !isRunning()) this.handleQuickSort();
-            if (e.key === "h" && !isRunning()) this.handleHeapSort();
-            if (e.key === "n" && !isRunning()) this.handleResetArray();
+            const { isDrawerOpen } = this.state;
+
+            if (!isDrawerOpen) {
+                if (e.key === "b" && !isRunning()) this.handleBubbleSort();
+                if (e.key === "s" && !isRunning()) this.handleSelectionSort();
+                if (e.key === "i" && !isRunning()) this.handleInsertionSort();
+                if (e.key === "q" && !isRunning()) this.handleQuickSort();
+                if (e.key === "h" && !isRunning()) this.handleHeapSort();
+                if (e.key === "n" && !isRunning()) this.handleResetArray();
+            } else {
+                if (e.key === "b" && !isRunning()) this.setState({ ...this.state, algo: 0 });
+                if (e.key === "s" && !isRunning()) this.setState({ ...this.state, algo: 1 });
+                if (e.key === "i" && !isRunning()) this.setState({ ...this.state, algo: 2 });
+                if (e.key === "q" && !isRunning()) this.setState({ ...this.state, algo: 3 });
+                if (e.key === "h" && !isRunning()) this.setState({ ...this.state, algo: 4 });
+            }
 
             if (e.key === "r") window.location.reload();
+            if (e.key === "d")
+                this.setState({ ...this.state, isDrawerOpen: !this.state.isDrawerOpen });
         });
     }
 
@@ -48,6 +61,10 @@ class Visualizer extends Component {
         this.state.insertionSort && InsertionSort(() => this.handleInsertionSort());
         this.state.quickSort && QuickSort(() => this.handleQuickSort());
         this.state.heapSort && HeapSort(() => this.handleHeapSort());
+
+        // disable overflow with drawer
+        if (this.state.isDrawerOpen) document.body.style.overflowY = "hidden";
+        else document.body.style.overflowY = "unset";
     }
 
     state = {
@@ -59,6 +76,8 @@ class Visualizer extends Component {
         heapSort: false,
         isDisabled: false,
         arrLength: 20,
+        isDrawerOpen: false,
+        algo: 0,
     };
 
     handleResetArray = () => {
@@ -184,6 +203,13 @@ class Visualizer extends Component {
                             </BarWrapper>
                         ))}
                     </Container>
+                    <Drawer
+                        isOpen={this.state.isDrawerOpen}
+                        toggleDrawer={() =>
+                            this.setState({ ...this.state, isDrawerOpen: !this.state.isDrawerOpen })
+                        }
+                        algo={this.state.algo}
+                    />
                 </Wrapper>
             </React.Fragment>
         );
