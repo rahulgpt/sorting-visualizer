@@ -1,10 +1,9 @@
-import React, { Component, createRef } from 'react';
-import { BubbleSort, QuickSort, SelectionSort, InsertionSort, HeapSort } from '../../algorithms';
-import FlexWrapper from '../flex-wrapper.js';
-import { Wrapper, Value, Bar, BarWrapper, Container } from './visualizer_components';
-import { NavWrapper, Logo, NavElement, ResetIcon } from './nav_components';
-import { config } from '../../app_config';
-
+import React, { Component, createRef } from "react";
+import { BubbleSort, QuickSort, SelectionSort, InsertionSort, HeapSort } from "../../algorithms";
+import FlexWrapper from "../flex-wrapper.js";
+import { Wrapper, Value, Bar, BarWrapper, Container } from "./visualizer_components";
+import { NavWrapper, Logo, NavElement, ResetIcon, StopIcon } from "./nav_components";
+import { config } from "../../app_config";
 
 class Visualizer extends Component {
     constructor(props) {
@@ -25,22 +24,22 @@ class Visualizer extends Component {
                 }, 100);
             }
 
-            childNodes.forEach(node => {
+            childNodes.forEach((node) => {
                 node.style.visibility = "visible";
-            })
+            });
         }, 10);
 
-        document.addEventListener('keydown', e => {
+        document.addEventListener("keydown", (e) => {
             const { isRunning } = this;
-            if (e.key === 'b' && !isRunning()) this.handleBubbleSort();
-            if (e.key === 's' && !isRunning()) this.handleSelectionSort();
-            if (e.key === 'i' && !isRunning()) this.handleInsertionSort();
-            if (e.key === 'q' && !isRunning()) this.handleQuickSort();
-            if (e.key === 'h' && !isRunning()) this.handleHeapSort();
-            if (e.key === 'n' && !isRunning()) this.handleResetArray();
+            if (e.key === "b" && !isRunning()) this.handleBubbleSort();
+            if (e.key === "s" && !isRunning()) this.handleSelectionSort();
+            if (e.key === "i" && !isRunning()) this.handleInsertionSort();
+            if (e.key === "q" && !isRunning()) this.handleQuickSort();
+            if (e.key === "h" && !isRunning()) this.handleHeapSort();
+            if (e.key === "n" && !isRunning()) this.handleResetArray();
 
-            if (e.key === 'r') window.location.reload();
-        })
+            if (e.key === "r") window.location.reload();
+        });
     }
 
     componentDidUpdate() {
@@ -59,8 +58,8 @@ class Visualizer extends Component {
         insertionSort: false,
         heapSort: false,
         isDisabled: false,
-        arrLength: 20
-    }
+        arrLength: 20,
+    };
 
     handleResetArray = () => {
         const { baseColor } = config.common;
@@ -70,52 +69,56 @@ class Visualizer extends Component {
         }
         this.setState({ array: arr });
 
-        let container = document.getElementById('container');
+        let container = document.getElementById("container");
         let blocks = container.childNodes;
 
-        blocks.forEach(block => block.childNodes[1].style.backgroundColor = baseColor);
-    }
+        blocks.forEach((block) => (block.childNodes[1].style.backgroundColor = baseColor));
+    };
 
     handleBubbleSort = () => {
         this.setState({
             bubbleSort: !this.state.bubbleSort,
             isDisabled: !this.state.isDisabled,
-        })
-    }
+        });
+    };
 
     handleQuickSort = () => {
         this.setState({
             quickSort: !this.state.quickSort,
             isDisabled: !this.state.isDisabled,
-        })
-    }
+        });
+    };
 
     handleSelectionSort = () => {
         this.setState({
             selectionSort: !this.state.selectionSort,
             isDisabled: !this.state.isDisabled,
-        })
-    }
+        });
+    };
 
     handleInsertionSort = () => {
         this.setState({
             insertionSort: !this.state.insertionSort,
             isDisabled: !this.state.isDisabled,
-        })
-    }
+        });
+    };
 
     handleHeapSort = () => {
         this.setState({
             heapSort: !this.state.heapSort,
             isDisabled: !this.state.isDisabled,
-        })
-    }
+        });
+    };
 
     isRunning = () => {
-        return this.state.bubbleSort || this.state.selectionSort
-            || this.state.quickSort || this.state.insertionSort
-            || this.state.heapSort;
-    }
+        return (
+            this.state.bubbleSort ||
+            this.state.selectionSort ||
+            this.state.quickSort ||
+            this.state.insertionSort ||
+            this.state.heapSort
+        );
+    };
 
     render() {
         const { isDisabled } = this.state;
@@ -123,37 +126,49 @@ class Visualizer extends Component {
         return (
             <React.Fragment>
                 <NavWrapper>
-                    <FlexWrapper justifyContent='space-between' >
-                        <Logo onClick={() => window.location.reload()}>&lt; Sorting Visualizer /&gt;</Logo>
+                    <FlexWrapper justifyContent="space-between">
+                        <Logo onClick={() => window.location.reload()}>
+                            &lt; Sorting Visualizer /&gt;
+                        </Logo>
 
-                        {isDisabled ? <ResetIcon size={30} disabled={isDisabled} color={'#FFE5E5'} />
-                            : <ResetIcon size={30} color={'white'} disabled={isDisabled} onClick={this.handleResetArray} />}
+                        <FlexWrapper gap="1.5rem">
+                            <StopIcon title="stop" onClick={() => window.location.reload()} />
+                            {isDisabled ? (
+                                <ResetIcon
+                                    size={30}
+                                    disabled={isDisabled}
+                                    color={"#FFE5E5"}
+                                    title="reset"
+                                />
+                            ) : (
+                                <ResetIcon
+                                    size={30}
+                                    color={"white"}
+                                    disabled={isDisabled}
+                                    onClick={this.handleResetArray}
+                                    title="reset"
+                                />
+                            )}
+                        </FlexWrapper>
                     </FlexWrapper>
-                    <FlexWrapper justifyContent='space-between' margin='2.5rem 0 0 0'>
-                        <FlexWrapper justifyContent='flex-start'>
+                    <FlexWrapper justifyContent="space-between" margin="2.5rem 0 0 0">
+                        <FlexWrapper justifyContent="flex-start">
                             <NavElement
                                 disabled={this.state.isDisabled}
-                                onClick={this.handleBubbleSort}>
+                                onClick={this.handleBubbleSort}
+                            >
                                 Bubble Sort
                             </NavElement>
-                            <NavElement
-                                disabled={isDisabled}
-                                onClick={this.handleSelectionSort}>
+                            <NavElement disabled={isDisabled} onClick={this.handleSelectionSort}>
                                 Selection Sort
                             </NavElement>
-                            <NavElement
-                                disabled={isDisabled}
-                                onClick={this.handleInsertionSort}>
+                            <NavElement disabled={isDisabled} onClick={this.handleInsertionSort}>
                                 Insertion Sort
                             </NavElement>
-                            <NavElement
-                                disabled={isDisabled}
-                                onClick={this.handleQuickSort}>
+                            <NavElement disabled={isDisabled} onClick={this.handleQuickSort}>
                                 Quick Sort
                             </NavElement>
-                            <NavElement
-                                disabled={isDisabled}
-                                onClick={this.handleHeapSort}>
+                            <NavElement disabled={isDisabled} onClick={this.handleHeapSort}>
                                 Heap Sort
                             </NavElement>
                         </FlexWrapper>
@@ -163,7 +178,7 @@ class Visualizer extends Component {
                 <Wrapper ref={this.parentRef} id="wrapper">
                     <Container length={this.state.arrLength} id="container">
                         {this.state.array.map((value, idx) => (
-                            <BarWrapper key={idx} idx={idx} style={{ visibility: 'hidden' }}>
+                            <BarWrapper key={idx} idx={idx} style={{ visibility: "hidden" }}>
                                 <Value>{value}</Value>
                                 <Bar className="array-bar" height={value} width={12} />
                             </BarWrapper>
@@ -176,14 +191,13 @@ class Visualizer extends Component {
 }
 
 /**
- * 
- * @param {number} min 
- * @param {number} max 
+ *
+ * @param {number} min
+ * @param {number} max
  * @returns {number} random number between the range
  */
 const randomIntFromInterval = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1) + min);
-}
+};
 
 export default Visualizer;
-
