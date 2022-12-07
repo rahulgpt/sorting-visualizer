@@ -104,6 +104,7 @@ const Drawer = ({ toggleDrawer, isOpen, algo }) => {
         heap: [{ color: "#D291BC", value: "Largest Element" }],
     };
 
+    // eslint-disable-next-line
     const colorDescSpecificLookup = [
         ,
         colorDescSpecific.selection,
