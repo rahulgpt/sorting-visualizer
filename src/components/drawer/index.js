@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { bubble, selection, insertion, quick } from "./implementation";
+import { BsFillInfoCircleFill } from "react-icons/bs";
+import { RiArrowLeftSLine } from "react-icons/ri";
 
 const Background = styled.div`
     width: 100vw;
@@ -62,7 +64,31 @@ const Code = styled(SyntaxHighlighter)`
     flex-grow: 1;
 `;
 
-const Drawer = ({ toggleOpen, isOpen, algo }) => {
+const Tip = styled.p`
+    font-size: 0.8rem;
+    margin: 0.2rem 0;
+    line-height: 18px;
+`;
+
+const DrawerToggle = styled.div`
+    background-color: #1b1b1b;
+    position: absolute;
+    left: -9.3%;
+    top: 50%;
+    border-radius: 50% 0 0 50%;
+    padding: 0.3rem;
+    box-shadow: ${(p) => (p.isOpen ? "none" : "0px 2px 2px 1px rgba(0, 0, 0, 0.5)")};
+    cursor: pointer;
+`;
+
+const DrawerIcon = styled(RiArrowLeftSLine)`
+    color: #fff;
+    font-size: 2rem;
+    transform: ${(p) => (p.isOpen ? "rotate(180deg)" : "rotate(0deg)")};
+    transition: transform 0.2s ease-in-out;
+`;
+
+const Drawer = ({ toggleDrawer, isOpen, algo }) => {
     const colorDescLookupCommon = [
         { color: "#cb6bf9", value: "Unsorted" },
         { color: "#952AC7", value: "Comparing" },
@@ -107,8 +133,15 @@ const Drawer = ({ toggleOpen, isOpen, algo }) => {
 
     return (
         <>
-            <Background onClick={toggleOpen} isOpen={isOpen} />
+            <Background onClick={toggleDrawer} isOpen={isOpen} />
             <DrawArea isOpen={isOpen}>
+                <DrawerToggle isOpen={isOpen} onClick={toggleDrawer}>
+                    <DrawerIcon isOpen={isOpen} />
+                </DrawerToggle>
+                <Tip>
+                    <BsFillInfoCircleFill style={{ marginRight: "0.5rem" }} />
+                    While the drawer is open, press the algorithm's hotkey to change the description
+                </Tip>
                 <h3>Color Description</h3>
                 <Row>
                     {colorDescLookupCommon.map((el) => (

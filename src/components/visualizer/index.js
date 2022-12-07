@@ -205,7 +205,7 @@ class Visualizer extends Component {
                     </Container>
                     <Drawer
                         isOpen={this.state.isDrawerOpen}
-                        toggleOpen={() =>
+                        toggleDrawer={() =>
                             this.setState({ ...this.state, isDrawerOpen: !this.state.isDrawerOpen })
                         }
                         algo={this.state.algo}
