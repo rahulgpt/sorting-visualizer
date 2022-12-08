@@ -55,6 +55,7 @@ const KBD = styled.div`
     border-bottom: 2px solid #dee2e6;
     font-weight: 600;
     font-size: 0.9rem;
+    pointer-events: none;
 `;
 
 const Code = styled(SyntaxHighlighter)`
