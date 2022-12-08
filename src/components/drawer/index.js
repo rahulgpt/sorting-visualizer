@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
-import { bubble, selection, insertion, quick } from "./implementation";
+import { bubble, selection, insertion, quick, heap } from "./implementation";
 import { BsFillInfoCircleFill } from "react-icons/bs";
 import { RiArrowLeftSLine } from "react-icons/ri";
 
@@ -14,8 +14,8 @@ const Background = styled.div`
     top: 0;
     left: 0;
     background-color: #000;
-    opacity: ${(p) => (p.isOpen ? 0.5 : 0)};
-    visibility: ${(p) => (p.isOpen ? "unset" : "hidden")};
+    opacity: ${(p) => (p.$isOpen ? 0.5 : 0)};
+    visibility: ${(p) => (p.$isOpen ? "unset" : "hidden")};
     transition: all 0.3s;
 `;
 
@@ -28,7 +28,7 @@ const DrawArea = styled.div`
     right: 0;
     top: 0;
     z-index: 5;
-    transform: ${(p) => (p.isOpen ? "translateX(0%)" : "translateX(100%)")};
+    transform: ${(p) => (p.$isOpen ? "translateX(0%)" : "translateX(100%)")};
     transition: transform 0.3s ease-in-out;
     color: #c7c9ca;
     max-height: 100vh;
@@ -77,14 +77,14 @@ const DrawerToggle = styled.div`
     top: 50%;
     border-radius: 50% 0 0 50%;
     padding: 0.3rem;
-    box-shadow: ${(p) => (p.isOpen ? "none" : "0px 2px 2px 1px rgba(0, 0, 0, 0.5)")};
+    box-shadow: ${(p) => (p.$isOpen ? "none" : "0px 2px 2px 1px rgba(0, 0, 0, 0.5)")};
     cursor: pointer;
 `;
 
 const DrawerIcon = styled(RiArrowLeftSLine)`
     color: #fff;
     font-size: 2rem;
-    transform: ${(p) => (p.isOpen ? "rotate(180deg)" : "rotate(0deg)")};
+    transform: ${(p) => (p.$isOpen ? "rotate(180deg)" : "rotate(0deg)")};
     transition: transform 0.2s ease-in-out;
 `;
 
@@ -130,14 +130,14 @@ const Drawer = ({ toggleDrawer, isOpen, algo }) => {
         { key: "D", value: "Toggle Drawer" },
     ];
 
-    const algoLookup = [bubble, selection, insertion, quick, quick];
+    const algoLookup = [bubble, selection, insertion, quick, heap];
 
     return (
         <>
-            <Background onClick={toggleDrawer} isOpen={isOpen} />
-            <DrawArea isOpen={isOpen}>
-                <DrawerToggle isOpen={isOpen} onClick={toggleDrawer}>
-                    <DrawerIcon isOpen={isOpen} />
+            <Background onClick={toggleDrawer} $isOpen={isOpen} />
+            <DrawArea $isOpen={isOpen}>
+                <DrawerToggle $isOpen={isOpen} onClick={toggleDrawer}>
+                    <DrawerIcon $isOpen={isOpen} />
                 </DrawerToggle>
                 <Tip>
                     <BsFillInfoCircleFill style={{ marginRight: "0.5rem" }} />

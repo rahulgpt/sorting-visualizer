@@ -84,3 +84,42 @@ function quickSort(arr, left = 0, right = arr.length - 1) {
   return arr;
 }
 `;
+
+export const heap = `
+function max_heapify(array, index, length) {
+  const swap = (arr, idx1, idx2) => {
+    [arr[idx1], arr[idx2]] = [arr[idx2], arr[idx1]];
+  };
+
+  let left = 2 * index;
+  let right = 2 * index + 1;
+  let maximum;
+  if (right < length) {
+    if (array[left] >= array[right])
+      maximum = left;
+    else 
+      maximum = right;
+  } 
+  else if (left < length)
+    maximum = left;
+  else 
+    return;
+  
+  if (array[index] < array[maximum]) {
+    swap(array, index, maximum);
+    max_heapify(array, maximum, length);
+  }
+}
+
+function heap_sort(array) {
+  let length = array.length;
+  for (let i = Math.floor(length / 2) - 1; i >= 0; i--) 
+    max_heapify(array, i, length);
+  
+  for (let i = length - 1; i >= 0; i--) {
+    swap(array, 0, i);
+    max_heapify(array, 0, i);
+  }
+  return array;
+}
+`;

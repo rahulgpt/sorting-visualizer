@@ -42,11 +42,11 @@ class Visualizer extends Component {
                 if (e.key === "h" && !isRunning()) this.handleHeapSort();
                 if (e.key === "n" && !isRunning()) this.handleResetArray();
             } else {
-                if (e.key === "b" && !isRunning()) this.setState({ ...this.state, algo: 0 });
-                if (e.key === "s" && !isRunning()) this.setState({ ...this.state, algo: 1 });
-                if (e.key === "i" && !isRunning()) this.setState({ ...this.state, algo: 2 });
-                if (e.key === "q" && !isRunning()) this.setState({ ...this.state, algo: 3 });
-                if (e.key === "h" && !isRunning()) this.setState({ ...this.state, algo: 4 });
+                if (e.key === "b") this.setState({ ...this.state, algo: 0 });
+                if (e.key === "s") this.setState({ ...this.state, algo: 1 });
+                if (e.key === "i") this.setState({ ...this.state, algo: 2 });
+                if (e.key === "q") this.setState({ ...this.state, algo: 3 });
+                if (e.key === "h") this.setState({ ...this.state, algo: 4 });
             }
 
             if (e.key === "r") window.location.reload();
@@ -56,11 +56,16 @@ class Visualizer extends Component {
     }
 
     componentDidUpdate() {
-        this.state.bubbleSort && BubbleSort(() => this.handleBubbleSort());
-        this.state.selectionSort && SelectionSort(() => this.handleSelectionSort());
-        this.state.insertionSort && InsertionSort(() => this.handleInsertionSort());
-        this.state.quickSort && QuickSort(() => this.handleQuickSort());
-        this.state.heapSort && HeapSort(() => this.handleHeapSort());
+        const { lock } = this;
+        const { bubbleSort, selectionSort, insertionSort, quickSort, heapSort } = this.state;
+
+        if (!this.state.lock) {
+            bubbleSort && lock() && BubbleSort(() => this.handleBubbleSort());
+            selectionSort && lock() && SelectionSort(() => this.handleSelectionSort());
+            insertionSort && lock() && InsertionSort(() => this.handleInsertionSort());
+            quickSort && lock() && QuickSort(() => this.handleQuickSort());
+            heapSort && lock() && HeapSort(() => this.handleHeapSort());
+        }
 
         // disable overflow with drawer
         if (this.state.isDrawerOpen) document.body.style.overflowY = "hidden";
@@ -77,6 +82,7 @@ class Visualizer extends Component {
         isDisabled: false,
         arrLength: 20,
         isDrawerOpen: false,
+        lock: false,
         algo: 0,
     };
 
@@ -98,6 +104,8 @@ class Visualizer extends Component {
         this.setState({
             bubbleSort: !this.state.bubbleSort,
             isDisabled: !this.state.isDisabled,
+            lock: false,
+            algo: 0,
         });
     };
 
@@ -105,6 +113,8 @@ class Visualizer extends Component {
         this.setState({
             quickSort: !this.state.quickSort,
             isDisabled: !this.state.isDisabled,
+            lock: false,
+            algo: 3,
         });
     };
 
@@ -112,6 +122,8 @@ class Visualizer extends Component {
         this.setState({
             selectionSort: !this.state.selectionSort,
             isDisabled: !this.state.isDisabled,
+            lock: false,
+            algo: 1,
         });
     };
 
@@ -119,6 +131,8 @@ class Visualizer extends Component {
         this.setState({
             insertionSort: !this.state.insertionSort,
             isDisabled: !this.state.isDisabled,
+            lock: false,
+            algo: 2,
         });
     };
 
@@ -126,6 +140,8 @@ class Visualizer extends Component {
         this.setState({
             heapSort: !this.state.heapSort,
             isDisabled: !this.state.isDisabled,
+            lock: false,
+            algo: 4,
         });
     };
 
@@ -137,6 +153,12 @@ class Visualizer extends Component {
             this.state.insertionSort ||
             this.state.heapSort
         );
+    };
+
+    lock = () => {
+        // lock will be released in repective handler functions
+        this.setState({ ...this.state, lock: true });
+        return true;
     };
 
     render() {
