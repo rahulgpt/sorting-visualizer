@@ -105,6 +105,7 @@ class Visualizer extends Component {
     };
 
     handleBubbleSort = () => {
+        document.body.focus();
         this.setState({
             bubbleSort: !this.state.bubbleSort,
             isDisabled: !this.state.isDisabled,
@@ -114,6 +115,7 @@ class Visualizer extends Component {
     };
 
     handleQuickSort = () => {
+        document.body.focus();
         this.setState({
             quickSort: !this.state.quickSort,
             isDisabled: !this.state.isDisabled,
@@ -123,6 +125,7 @@ class Visualizer extends Component {
     };
 
     handleSelectionSort = () => {
+        document.body.focus();
         this.setState({
             selectionSort: !this.state.selectionSort,
             isDisabled: !this.state.isDisabled,
@@ -132,6 +135,7 @@ class Visualizer extends Component {
     };
 
     handleInsertionSort = () => {
+        document.body.focus();
         this.setState({
             insertionSort: !this.state.insertionSort,
             isDisabled: !this.state.isDisabled,
@@ -141,6 +145,7 @@ class Visualizer extends Component {
     };
 
     handleHeapSort = () => {
+        document.body.focus();
         this.setState({
             heapSort: !this.state.heapSort,
             isDisabled: !this.state.isDisabled,
