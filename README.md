@@ -1,8 +1,4 @@
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-
+A visualization of common sorting algorithms.
 
 ## Quick Start
 
@@ -15,5 +11,6 @@ npm start
 
 https://vizsort.netlify.app/
 
-![sort-viz](https://user-images.githubusercontent.com/56781067/128822236-b10e7ae3-78d2-4ddc-81f9-960095a9d7c0.gif)
+<img width="1552" alt="Screenshot 2022-12-08 at 4 47 49 PM" src="https://user-images.githubusercontent.com/56781067/206434386-ab56a15e-a22f-432d-a377-45536766463e.png">
+
 
