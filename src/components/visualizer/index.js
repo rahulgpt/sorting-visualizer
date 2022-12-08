@@ -40,18 +40,18 @@ class Visualizer extends Component {
             const { isDrawerOpen } = this.state;
 
             if (!isDrawerOpen) {
-                if (e.key === "b" && !isRunning()) this.handleBubbleSort();
-                if (e.key === "s" && !isRunning()) this.handleSelectionSort();
-                if (e.key === "i" && !isRunning()) this.handleInsertionSort();
-                if (e.key === "q" && !isRunning()) this.handleQuickSort();
-                if (e.key === "h" && !isRunning()) this.handleHeapSort();
-                if (e.key === "n" && !isRunning()) this.handleResetArray();
+                if ((e.key === "b" || e.key === "B") && !isRunning()) this.handleBubbleSort();
+                if ((e.key === "s" || e.key === "S") && !isRunning()) this.handleSelectionSort();
+                if ((e.key === "i" || e.key === "I") && !isRunning()) this.handleInsertionSort();
+                if ((e.key === "q" || e.key === "Q") && !isRunning()) this.handleQuickSort();
+                if ((e.key === "h" || e.key === "H") && !isRunning()) this.handleHeapSort();
+                if ((e.key === "n" || e.key === "N") && !isRunning()) this.handleResetArray();
             } else {
-                if (e.key === "b") this.setState({ algo: 0 });
-                if (e.key === "s") this.setState({ algo: 1 });
-                if (e.key === "i") this.setState({ algo: 2 });
-                if (e.key === "q") this.setState({ algo: 3 });
-                if (e.key === "h") this.setState({ algo: 4 });
+                if (e.key === "b" || e.key === "B") this.setState({ algo: 0 });
+                if (e.key === "s" || e.key === "S") this.setState({ algo: 1 });
+                if (e.key === "i" || e.key === "I") this.setState({ algo: 2 });
+                if (e.key === "q" || e.key === "Q") this.setState({ algo: 3 });
+                if (e.key === "h" || e.key === "H") this.setState({ algo: 4 });
             }
 
             if (e.key === "r") window.location.reload();
