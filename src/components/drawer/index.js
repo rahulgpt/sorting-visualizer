@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
-import { bubble, selection, insertion, quick } from "./implementation";
+import { bubble, selection, insertion, quick, heap } from "./implementation";
 import { BsFillInfoCircleFill } from "react-icons/bs";
 import { RiArrowLeftSLine } from "react-icons/ri";
 
@@ -130,7 +130,7 @@ const Drawer = ({ toggleDrawer, isOpen, algo }) => {
         { key: "D", value: "Toggle Drawer" },
     ];
 
-    const algoLookup = [bubble, selection, insertion, quick, quick];
+    const algoLookup = [bubble, selection, insertion, quick, heap];
 
     return (
         <>
