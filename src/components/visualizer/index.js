@@ -105,6 +105,7 @@ class Visualizer extends Component {
             bubbleSort: !this.state.bubbleSort,
             isDisabled: !this.state.isDisabled,
             lock: false,
+            algo: 0,
         });
     };
 
@@ -113,6 +114,7 @@ class Visualizer extends Component {
             quickSort: !this.state.quickSort,
             isDisabled: !this.state.isDisabled,
             lock: false,
+            algo: 3,
         });
     };
 
@@ -121,6 +123,7 @@ class Visualizer extends Component {
             selectionSort: !this.state.selectionSort,
             isDisabled: !this.state.isDisabled,
             lock: false,
+            algo: 1,
         });
     };
 
@@ -129,6 +132,7 @@ class Visualizer extends Component {
             insertionSort: !this.state.insertionSort,
             isDisabled: !this.state.isDisabled,
             lock: false,
+            algo: 2,
         });
     };
 
@@ -137,6 +141,7 @@ class Visualizer extends Component {
             heapSort: !this.state.heapSort,
             isDisabled: !this.state.isDisabled,
             lock: false,
+            algo: 4,
         });
     };
 
