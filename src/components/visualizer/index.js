@@ -1,10 +1,11 @@
 import React, { Component, createRef } from "react";
 import { BubbleSort, QuickSort, SelectionSort, InsertionSort, HeapSort } from "../../algorithms";
 import FlexWrapper from "../flex-wrapper.js";
-import { Wrapper, Value, Bar, BarWrapper, Container } from "./visualizer_components";
+import { Wrapper, Value, Bar, BarWrapper, Container, ScreenSizeWarning } from "./visualizer_components";
 import { NavWrapper, Logo, NavElement, ResetIcon, StopIcon } from "./nav_components";
 import { config } from "../../app_config";
 import Drawer from "../drawer";
+import ScreenOverlayImage from "../screen-overlay.svg";
 
 class Visualizer extends Component {
     constructor(props) {
@@ -13,6 +14,10 @@ class Visualizer extends Component {
     }
 
     componentDidMount() {
+        // Warning overlay
+        if (window && (window.innerWidth < 875 || window.innerHeight < 624))
+            document.getElementById("screen-size-overlay").style.display = "block";
+
         this.handleResetArray();
 
         let childNodes = this.parentRef.current.childNodes[0].childNodes;
@@ -50,8 +55,7 @@ class Visualizer extends Component {
             }
 
             if (e.key === "r") window.location.reload();
-            if (e.key === "d")
-                this.setState({ ...this.state, isDrawerOpen: !this.state.isDrawerOpen });
+            if (e.key === "d") this.setState({ ...this.state, isDrawerOpen: !this.state.isDrawerOpen });
         });
     }
 
@@ -166,6 +170,7 @@ class Visualizer extends Component {
 
         return (
             <React.Fragment>
+                <ScreenSizeWarningOverlay />
                 <NavWrapper>
                     <FlexWrapper justifyContent="space-between">
                         <Logo onClick={() => window.location.reload()}>
@@ -194,10 +199,7 @@ class Visualizer extends Component {
                     </FlexWrapper>
                     <FlexWrapper justifyContent="space-between" margin="2.5rem 0 0 0">
                         <FlexWrapper justifyContent="flex-start">
-                            <NavElement
-                                disabled={this.state.isDisabled}
-                                onClick={this.handleBubbleSort}
-                            >
+                            <NavElement disabled={this.state.isDisabled} onClick={this.handleBubbleSort}>
                                 Bubble Sort
                             </NavElement>
                             <NavElement disabled={isDisabled} onClick={this.handleSelectionSort}>
@@ -237,6 +239,30 @@ class Visualizer extends Component {
         );
     }
 }
+
+const ScreenSizeWarningOverlay = () => (
+    <ScreenSizeWarning id="screen-size-overlay">
+        <FlexWrapper style={{ flexDirection: "column" }} gap="1rem">
+            <img src={ScreenOverlayImage} alt="" />
+            <p style={{ color: "#c7c9ca", lineHeight: "1.5rem" }}>
+                This app is not suitable for small screen sizes. The minimun screen size required is "876
+                x 624" pixels.
+            </p>
+            <p
+                style={{
+                    color: "#efefef",
+                    fontSize: "0.9rem",
+                    textDecoration: "underline",
+                    textUnderlineOffset: "2px",
+                    cursor: "pointer",
+                }}
+                onClick={() => (document.getElementById("screen-size-overlay").style.display = "none")}
+            >
+                Continue anyway!
+            </p>
+        </FlexWrapper>
+    </ScreenSizeWarning>
+);
 
 /**
  *
