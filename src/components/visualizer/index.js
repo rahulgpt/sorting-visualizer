@@ -54,8 +54,9 @@ class Visualizer extends Component {
                 if (e.key === "h" || e.key === "H") this.setState({ algo: 4 });
             }
 
-            if (e.key === "r") window.location.reload();
-            if (e.key === "d") this.setState({ isDrawerOpen: !this.state.isDrawerOpen });
+            if (e.key === "r" || e.key === "R") window.location.reload();
+            if (e.key === "d" || e.key === "D")
+                this.setState({ isDrawerOpen: !this.state.isDrawerOpen });
         });
     }
 
